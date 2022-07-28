@@ -78,21 +78,21 @@ class IncidentUpdateSerializer(serializers.ModelSerializer):
 
 
 
-# class IncidentSearchCreateSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = IncidentSearch
-#         fields = ["search_incident"]
-#
-#     def save(self, validated_data):
-#         search_incident = validated_data.pop('search_incident')
-#
-#         if not IncidentData.objects.filter(incident_number=search_incident,reporter_name=self.context['request'].user).exists():
-#             raise ValidationError("This incident is not available.")
-#
-#         IncidentSearch.objects.all().delete()
-#
-#         instance = IncidentSearch.objects.create(
-#             search_incident=search_incident,
-#             user=self.context['request'].user,
-#         )
-#         return instance
+class IncidentSearchCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IncidentSearch
+        fields = ["search_incident"]
+
+    def save(self, validated_data):
+        search_incident = validated_data.pop('search_incident')
+
+        if not IncidentData.objects.filter(incident_number=search_incident,reporter_name=self.context['request'].user).exists():
+            raise ValidationError("This incident is not available.")
+
+        IncidentSearch.objects.all().delete()
+
+        instance = IncidentSearch.objects.create(
+            search_incident=search_incident,
+            user=self.context['request'].user,
+        )
+        return instance
