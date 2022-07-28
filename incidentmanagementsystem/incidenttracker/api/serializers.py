@@ -77,7 +77,7 @@ class IncidentUpdateSerializer(serializers.ModelSerializer):
         return instance
 
 
-
+# for search through API
 class IncidentSearchCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = IncidentSearch

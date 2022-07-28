@@ -9,11 +9,12 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin, CreateModelMixin, DestroyModelMixin
 from rest_framework.exceptions import NotFound
-from .serializers import IncidentDetailSerializer, IncidentCreateSerializer, IncidentUpdateSerializer
-from .serializers import IncidentSearchCreateSerializer
 from incidentmanagementsystem.incidenttracker.models import IncidentData, IncidentSearch
-
 from rest_framework import filters
+from .serializers import IncidentDetailSerializer, IncidentCreateSerializer, IncidentUpdateSerializer
+
+# for search through API
+from .serializers import IncidentSearchCreateSerializer
 
 User = get_user_model()
 
@@ -69,6 +70,7 @@ class IncidentViewSet(RetrieveModelMixin,
         return Response({"response": serializer.data, "status": "success"}, status=status.HTTP_202_ACCEPTED)
 
 
+# for search through API
 class IncidentSearchViewSet(RetrieveModelMixin,
                   ListModelMixin,
                   UpdateModelMixin,
@@ -91,7 +93,6 @@ class IncidentSearchViewSet(RetrieveModelMixin,
             return self.queryset.filter(reporter_name=self.request.user,incident_number="00")
         else:
             return self.queryset.filter(reporter_name=self.request.user,incident_number=incident_number[0]['search_incident'])
-
 
     def get_object(self, *args, **kwargs):  # used in update
         self.queryset = self.get_queryset()
