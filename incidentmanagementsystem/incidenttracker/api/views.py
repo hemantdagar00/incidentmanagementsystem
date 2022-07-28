@@ -18,6 +18,7 @@ from .serializers import IncidentSearchCreateSerializer
 
 User = get_user_model()
 
+
 class IncidentViewSet(RetrieveModelMixin,
                   ListModelMixin,
                   UpdateModelMixin,
